@@ -180,13 +180,7 @@ public class DataDAO {
         
         try{
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("Select DataStorage.Temperature2.*, DataStorage.Humidity2.*, DataStorage.Light2.*"
-                    + "From DataStorage.Temperature2"
-                    + " Join DataStorage.Humidity2"
-                    + " On DataStorage.Humidity2.SensorId = DataStorage.Temperature2.SensorId"
-                    + " Join DataStorage.Light2"
-                    + " On DataStorage.Light2.SensorId = DataStorage.Temperature2.SensorId");
-            
+            ResultSet rs = stmt.executeQuery("Select DataStorage.Temperature2.SensorId, DataStorage.Humidity2.SensorId, DataStorage.Light2.SensorId");
             while(rs.next()){
                 String sensor = rs.getString("SensorId");
                 if(!sensorList.contains(sensor)){
