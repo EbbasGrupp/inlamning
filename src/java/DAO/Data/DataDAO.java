@@ -23,13 +23,22 @@ public class DataDAO {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("Select * from DataStorage.Temperature2");
             rs.last();
-            temp.setId(rs.getString("SensorId"));
-            temp.setTimeDate(rs.getTimestamp("Date"));
-            temp.setTemp(rs.getDouble("Temperature"));
             
-            LocalDateTime datTime = temp.getTimeDate().toLocalDateTime();
+            
+            LocalDateTime datTime = rs.getTimestamp("Date").toLocalDateTime();
             LocalDateTime oneHourAgo = LocalDateTime.now();
             oneHourAgo.minusHours(1);
+            
+            while ( rs.previous() ){
+                if ( datTime.getHour() == oneHourAgo.getHour()
+                        && datTime.getDayOfMonth() == oneHourAgo.getDayOfMonth()
+                        && datTime.getYear() == oneHourAgo.getYear() && datTime.getMonthValue() == oneHourAgo.getMonthValue()){
+                        temp.setId(rs.getString("SensorId"));
+                        temp.setTimeDate(rs.getTimestamp("Date"));
+                        temp.setTemp(rs.getDouble("Temperature"));
+                        break;
+                }
+            }
             
             
         } catch (SQLException ex) {}
@@ -50,9 +59,21 @@ public class DataDAO {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("Select * from DataStorage.Humidity2");
             rs.last();
-            hum.setHum(rs.getDouble("Humidity"));
-            hum.setId(rs.getString("SensorId"));
-            hum.setTimeDate(rs.getTimestamp("Date"));
+            
+            LocalDateTime datTime = rs.getTimestamp("Date").toLocalDateTime();
+            LocalDateTime oneHourAgo = LocalDateTime.now();
+            oneHourAgo.minusHours(1);
+            
+            while ( rs.previous() ){
+                if ( datTime.getHour() == oneHourAgo.getHour()
+                        && datTime.getDayOfMonth() == oneHourAgo.getDayOfMonth()
+                        && datTime.getYear() == oneHourAgo.getYear() && datTime.getMonthValue() == oneHourAgo.getMonthValue()){
+                            hum.setHum(rs.getDouble("Humidity"));
+                            hum.setId(rs.getString("SensorId"));
+                            hum.setTimeDate(rs.getTimestamp("Date"));            
+                            break;
+                }
+            }
         } catch (SQLException ex){}
         
         return hum;
@@ -71,13 +92,26 @@ public class DataDAO {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("Select * from DataStorage.Light2");
             rs.last();
-            lighty.setLight(rs.getDouble("Light"));
-            lighty.setId(rs.getString("SensorId"));
-            lighty.setTime(rs.getTimestamp("Date"));
+            
+            LocalDateTime datTime = rs.getTimestamp("Date").toLocalDateTime();
+            LocalDateTime oneHourAgo = LocalDateTime.now();
+            oneHourAgo.minusHours(1);
+            
+            while ( rs.previous() ){
+                if ( datTime.getHour() == oneHourAgo.getHour()
+                        && datTime.getDayOfMonth() == oneHourAgo.getDayOfMonth()
+                        && datTime.getYear() == oneHourAgo.getYear() && datTime.getMonthValue() == oneHourAgo.getMonthValue()){
+                            lighty.setLight(rs.getDouble("Light"));
+                            lighty.setId(rs.getString("SensorId"));
+                            lighty.setTime(rs.getTimestamp("Date"));           
+                            break;
+                }
+            }
         } catch (SQLException ex){}
         
         return lighty;
     }
+    
     
     /**
      * A method for returning all the temperature data from the last day.
@@ -161,8 +195,6 @@ public class DataDAO {
                 }
             }
         } catch ( SQLException ex ) {}
-        
-        
         return lightList;
     }
     
@@ -186,7 +218,6 @@ public class DataDAO {
                 if(!sensorList.contains(sensor)){
                     sensorList.add(sensor);
                 }
-                
             }  
             
         } catch ( SQLException ex ) {}
