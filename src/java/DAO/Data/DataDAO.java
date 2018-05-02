@@ -23,7 +23,7 @@ public class DataDAO {
             Statement stmt = con.createStatement();
             ResultSet rs = stmt.executeQuery("Select * from DataStorage.Temperature2");
             rs.last();
-            temp.setId(rs.getString("id"));
+            temp.setId(rs.getString("SensorId"));
             temp.setTimeDate(rs.getTimestamp("Date"));
             temp.setTemp(rs.getDouble("Temperature"));
             
@@ -51,7 +51,7 @@ public class DataDAO {
             ResultSet rs = stmt.executeQuery("Select * from DataStorage.Humidity2");
             rs.last();
             hum.setHum(rs.getDouble("Humidity"));
-            hum.setId(rs.getString("id"));
+            hum.setId(rs.getString("SensorId"));
             hum.setTimeDate(rs.getTimestamp("Date"));
         } catch (SQLException ex){}
         
@@ -72,7 +72,7 @@ public class DataDAO {
             ResultSet rs = stmt.executeQuery("Select * from DataStorage.Light2");
             rs.last();
             lighty.setLight(rs.getDouble("Light"));
-            lighty.setId(rs.getString("id"));
+            lighty.setId(rs.getString("SensorId"));
             lighty.setTime(rs.getTimestamp("Date"));
         } catch (SQLException ex){}
         
@@ -100,7 +100,7 @@ public class DataDAO {
                 lastDay.minusDays(1);
                 
                 if(datTime.getDayOfMonth() == lastDay.getDayOfMonth() && datTime.getYear() == lastDay.getYear() && datTime.getMonthValue() == lastDay.getMonthValue()){
-                    temp.setId(rs.getString("id"));
+                    temp.setId(rs.getString("SensorId"));
                     temp.setTimeDate(rs.getTimestamp("Date"));
                     temp.setTemp(rs.getDouble("Temperature"));
                     tempList.add(temp);
@@ -127,7 +127,7 @@ public class DataDAO {
                 lastDay.minusDays(1);
                 
                 if(datTime.getDayOfMonth() == lastDay.getDayOfMonth() && datTime.getYear() == lastDay.getYear() && datTime.getMonthValue() == lastDay.getMonthValue()){
-                    hum.setId(rs.getString("id"));
+                    hum.setId(rs.getString("SensorId"));
                     hum.setTimeDate(rs.getTimestamp("Date"));
                     hum.setHum(rs.getDouble("Humidity"));
                     humList.add(hum);
@@ -154,7 +154,7 @@ public class DataDAO {
                 lastDay.minusDays(1);
                 
                 if(datTime.getDayOfMonth() == lastDay.getDayOfMonth() && datTime.getYear() == lastDay.getYear() && datTime.getMonthValue() == lastDay.getMonthValue()){
-                    light.setId(rs.getString("id"));
+                    light.setId(rs.getString("SensorId"));
                     light.setTime(rs.getTimestamp("Date"));
                     light.setLight(rs.getDouble("Light"));
                     lightList.add(light);
@@ -168,7 +168,8 @@ public class DataDAO {
     
     /**
      * A method for getting a list of all the connected Sensors.
-     * <br>It begins by connecting to the database, where it proceeds to join all the tables with their column "id".
+     * Might not be needed..
+     * <br>It begins by connecting to the database, where it proceeds to join all the tables with their column "SensorId".
      *  Which is the name of the sensor that sent the information. 
      * @return A {@code String} of name/ID for the sensors.
      */
@@ -182,12 +183,12 @@ public class DataDAO {
             ResultSet rs = stmt.executeQuery("Select DataStorage.Temperature2.*, DataStorage.Humidity2.*, DataStorage.Light2.*"
                     + "From DataStorage.Temperature2"
                     + " Join DataStorage.Humidity2"
-                    + " On DataStorage.Humidity2.id = DataStorage.Temperature2.id"
+                    + " On DataStorage.Humidity2.SensorId = DataStorage.Temperature2.SensorId"
                     + " Join DataStorage.Light2"
-                    + " On DataStorage.Light2.id = DataStorage.Temperature2.id");
+                    + " On DataStorage.Light2.SensorId = DataStorage.Temperature2.SensorId");
             
             while(rs.next()){
-                String sensor = rs.getString("id");
+                String sensor = rs.getString("SensorId");
                 if(!sensorList.contains(sensor)){
                     sensorList.add(sensor);
                 }
