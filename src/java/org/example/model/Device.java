@@ -4,7 +4,7 @@
  * and open the template in the editor.
  */
 package org.example.model;
-import HelloWorldService.Temp;
+
 
 public class Device {
 
@@ -68,8 +68,7 @@ public class Device {
      * @param temperature the temperature to set
      */
     public void setTemperature(String temperature) {
-        Temp temp = new Temp();
-        this.temperature = String.valueOf(temp.getTemp());
+        this.temperature = temperature;
     }
 
     /**
