@@ -22,7 +22,7 @@ public class Connect {
         Properties prop = new Properties();
         try{
             //Byt senare!! 0:
-            prop.load(new FileInputStream("inlamning/src/conf/settings.properties"));
+            prop.load(new FileInputStream("/Users/VictorPonten/NetBeansProjects/inlamning1/src/conf/settings.properties"));
             
         } catch (IOException ex) {
             Logger.getLogger(Connect.class.getName()).log(Level.SEVERE, null, ex);
