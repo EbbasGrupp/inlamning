@@ -1,7 +1,10 @@
-DAO\Service.class
+DAO\Data\Data.class
 org\netbeans\rest\application\config\ApplicationConfig.class
+WebSocket\TextDecoder.class
 DAO\Data\Humidity.class
 DAO\Connect.class
 DAO\Data\DataDAO.class
 DAO\Data\LightIntensity.class
 DAO\Data\Temperature.class
+WebSocket\TextEncoder.class
+WebSocket\Endpoint.class

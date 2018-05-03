@@ -9,6 +9,41 @@ import java.util.ArrayList;
 
 public class DataDAO {
     
+    public Data getData(){
+        
+        Data data = new Data();
+        Connect connect = new Connect();
+        Connection con = connect.getConnection();
+        
+        try{
+            Statement stmt = con.createStatement();
+            ResultSet rs = stmt.executeQuery("Select * from DataStorage.Temperature2 where SensorId = 1 order by date Desc Limit 1");
+   
+            
+            Statement stmt2 = con.createStatement();
+            ResultSet rs2 = stmt2.executeQuery("Select * from DataStorage.Humidity2 where SensorId = 1 order by date Desc Limit 1");
+            
+            
+            while(rs2.next()){
+                System.out.println("id " + rs2.getInt("id"));
+                data.setHum(rs2.getDouble("Humidity"));
+            }
+            
+            while(rs.next()){
+             System.out.println("id " + rs.getInt("id"));
+             data.setTemp(rs.getDouble("Temperature"));
+            }
+            
+            System.out.println(data.getHum() + " " + data.getTemp());
+            //data.setTimeDate(rs.getTimestamp("Date"));
+            data.setId(rs.getString("SensorId"));
+            
+        } catch(SQLException ex) {
+            ex.printStackTrace();
+        }
+        
+        return data;
+    }
     /**
      * Get the temperature data from the last hour. Connects to the database and selects from the temperature table.
      * <br>Where the time should be around one hour before the current time. 
@@ -227,7 +262,7 @@ public class DataDAO {
         
         try{
             Statement stmt = con.createStatement();
-            ResultSet rs = stmt.executeQuery("Select DataStorage.Temperature2.SensorId, DataStorage.Humidity2.SensorId, DataStorage.Light2.SensorId");
+            ResultSet rs = stmt.executeQuery("Select SensorId from DataStorage.Temperature2");
             while(rs.next()){
                 String sensor = rs.getString("SensorId");
                 if(!sensorList.contains(sensor)){

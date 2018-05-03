@@ -7,12 +7,8 @@ import java.sql.Timestamp;
 public class Humidity {
     
     private double hum;
-    
     private String id;
-
     private Timestamp timeDate;
-
-    
     
     
 
