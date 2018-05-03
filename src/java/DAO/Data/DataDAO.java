@@ -30,9 +30,11 @@ public class DataDAO {
             oneHourAgo.minusHours(1);
             
             while ( rs.previous() ){
-                if ( datTime.getHour() == oneHourAgo.getHour()
+                if ( datTime.getHour() >= oneHourAgo.getHour()
                         && datTime.getDayOfMonth() == oneHourAgo.getDayOfMonth()
-                        && datTime.getYear() == oneHourAgo.getYear() && datTime.getMonthValue() == oneHourAgo.getMonthValue()){
+                        && datTime.getYear() == oneHourAgo.getYear()
+                        && datTime.getMonthValue() == oneHourAgo.getMonthValue()){
+                    
                         temp.setId(rs.getString("SensorId"));
                         temp.setTimeDate(rs.getTimestamp("Date"));
                         temp.setTemp(rs.getDouble("Temperature"));
@@ -65,9 +67,11 @@ public class DataDAO {
             oneHourAgo.minusHours(1);
             
             while ( rs.previous() ){
-                if ( datTime.getHour() == oneHourAgo.getHour()
+                if ( datTime.getHour() >= oneHourAgo.getHour()
                         && datTime.getDayOfMonth() == oneHourAgo.getDayOfMonth()
-                        && datTime.getYear() == oneHourAgo.getYear() && datTime.getMonthValue() == oneHourAgo.getMonthValue()){
+                        && datTime.getYear() == oneHourAgo.getYear()
+                        && datTime.getMonthValue() == oneHourAgo.getMonthValue()){
+                    
                             hum.setHum(rs.getDouble("Humidity"));
                             hum.setId(rs.getString("SensorId"));
                             hum.setTimeDate(rs.getTimestamp("Date"));            
@@ -98,9 +102,11 @@ public class DataDAO {
             oneHourAgo.minusHours(1);
             
             while ( rs.previous() ){
-                if ( datTime.getHour() == oneHourAgo.getHour()
+                if ( datTime.getHour() >= oneHourAgo.getHour()
                         && datTime.getDayOfMonth() == oneHourAgo.getDayOfMonth()
-                        && datTime.getYear() == oneHourAgo.getYear() && datTime.getMonthValue() == oneHourAgo.getMonthValue()){
+                        && datTime.getYear() == oneHourAgo.getYear()
+                        && datTime.getMonthValue() == oneHourAgo.getMonthValue()){
+                    
                             lighty.setLight(rs.getDouble("Light"));
                             lighty.setId(rs.getString("SensorId"));
                             lighty.setTime(rs.getTimestamp("Date"));           
@@ -133,7 +139,10 @@ public class DataDAO {
                 LocalDateTime lastDay = LocalDateTime.now();
                 lastDay.minusDays(1);
                 
-                if(datTime.getDayOfMonth() == lastDay.getDayOfMonth() && datTime.getYear() == lastDay.getYear() && datTime.getMonthValue() == lastDay.getMonthValue()){
+                if(datTime.getDayOfMonth() >= lastDay.getDayOfMonth()
+                       && datTime.getYear() == lastDay.getYear()
+                        && datTime.getMonthValue() == lastDay.getMonthValue()){
+                    
                     temp.setId(rs.getString("SensorId"));
                     temp.setTimeDate(rs.getTimestamp("Date"));
                     temp.setTemp(rs.getDouble("Temperature"));
@@ -160,14 +169,18 @@ public class DataDAO {
                 LocalDateTime lastDay = LocalDateTime.now();
                 lastDay.minusDays(1);
                 
-                if(datTime.getDayOfMonth() == lastDay.getDayOfMonth() && datTime.getYear() == lastDay.getYear() && datTime.getMonthValue() == lastDay.getMonthValue()){
+                if(datTime.getDayOfMonth() >= lastDay.getDayOfMonth()
+                        && datTime.getYear() == lastDay.getYear()
+                        && datTime.getMonthValue() == lastDay.getMonthValue()){
                     hum.setId(rs.getString("SensorId"));
                     hum.setTimeDate(rs.getTimestamp("Date"));
                     hum.setHum(rs.getDouble("Humidity"));
                     humList.add(hum);
                 }
             }
-        } catch ( SQLException ex ) {}
+        } catch ( SQLException ex ) {
+            ex.printStackTrace();
+        }
         return humList;
     }
     
@@ -187,7 +200,9 @@ public class DataDAO {
                 LocalDateTime lastDay = LocalDateTime.now();
                 lastDay.minusDays(1);
                 
-                if(datTime.getDayOfMonth() == lastDay.getDayOfMonth() && datTime.getYear() == lastDay.getYear() && datTime.getMonthValue() == lastDay.getMonthValue()){
+                if(datTime.getDayOfMonth() >= lastDay.getDayOfMonth()
+                        && datTime.getYear() == lastDay.getYear()
+                        && datTime.getMonthValue() == lastDay.getMonthValue()){
                     light.setId(rs.getString("SensorId"));
                     light.setTime(rs.getTimestamp("Date"));
                     light.setLight(rs.getDouble("Light"));
